@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Search Filter</title>
+
+    <style>
+
+      body {
+        color: #FC6512;
+        font-family: Baskerville, "Palatino Linotype", Times, serif;        
+        background: #CDE6FF;                        
+        padding: 2em;
+      } 
+
+      .content{        
+        max-width: 600px;                     
+        min-width: 400px;
+        margin: auto;        
+      }
+
+      .controls{
+        padding: 1em;
+        margin-top: 2em;
+        width: 80%;
+      }      
+      
+      .results {
+        background: #E9F5FE;  
+        padding: 1em; 
+        margin-top: 2em;
+        border-radius: 20px;
+        width: 80%;
+      }
+
+    </style>     
+
+  </head>
+  <body>
+
+    <div class="content">
+
+      <div>
+        <span>Filter: </span><input type="text" id="filter-input" value="">
+      </div>
+
+      <div id="text-container">
+        <textarea id="original-text" rows="9" class="controls">
+Three Rings for the Elven-kings under the sky,
+Seven for the Dwarf-lords in their halls of stone,
+Nine for Mortal Men doomed to die,
+One for the Dark Lord on his dark throne
+In the Land of Mordor where the Shadows lie.
+One Ring to rule them all, One Ring to find them,
+One Ring to bring them all, and in the darkness bind them,
+In the Land of Mordor where the Shadows lie.          
+        </textarea>
+      </div>  
+
+      <div class="results">
+        <p id="display-text"></p>  
+      </div>    
+
+    </div>  
+
+    <script type="text/javascript">
+
+      // search filter module
+      var searchFilter = (function(){
+
+        var wholeText = "";
+
+        var privFilter = "";
+
+        function pubSetText(text){
+          wholeText = text || wholeText;
+        }
+
+        function pubSetFilter(filter){
+
+          console.log("input = " + filter);
+
+          var flag = /[^\w\s]/.test(filter);
+          if (flag){
+            privFilter = ""; console.log("filter = " + privFilter);           
+            return;
+          }
+
+          privFilter = filter; console.log("filter = " + privFilter); 
+        }        
+
+        function pubGetFilteredText(filter){
+
+          pubSetFilter(filter); 
+
+          if (privFilter === ""){
+            return wholeText;
+          }
+
+          // TODO: apply regexp to filter text
+          // var regexp = new RegExp("(^\\w*" + privFilter + "\\w*\\s)|(\\s\\w*" + privFilter + "\\w*\\s)|(\\s\\w*" + privFilter + "\\w*$)", "img");          
+          var regexp = new RegExp("(\\w*" + privFilter + "\\w*)", "img");
+
+          var results = wholeText.match(regexp);          
+
+          if(results){      
+            return results.join(" ");
+          }
+
+          return "";
+
+        }
+
+        return {
+
+          setText : pubSetText,
+          
+          setFilter : pubSetFilter,
+
+          getFilteredText : pubGetFilteredText
+
+        }
+
+      })();
+
+
+      // implementation
+
+      // set initial values
+      var originalText = document.getElementById("text-container").textContent.trim();
+      searchFilter.setText(originalText);     
+      document.getElementById("display-text").textContent = originalText;
+
+      // handler for filtering event
+      function applyFilter(e){        
+        var filter = e.target.value.trim();
+        var filteredText = searchFilter.getFilteredText(filter);
+        document.getElementById("display-text").textContent = filteredText;
+      }
+            
+      // bind the event to the handler
+      document.getElementById("filter-input").addEventListener("keyup", applyFilter);
+
+      document.getElementById("text-container").addEventListener("change", function(e){
+        var text = e.target.value.trim();   
+        searchFilter.setText(text);
+      });
+
+    </script>
+
+  </body>
+</html>
