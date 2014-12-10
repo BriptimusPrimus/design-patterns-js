@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Search Filter</title>
+
+    <style>
+
+      body {
+        color: #FC6512;
+        font-family: Baskerville, "Palatino Linotype", Times, serif;        
+        background: #CDE6FF;                        
+        padding: 2em;
+      } 
+
+      .canvas{
+        width: 600px;
+        height: 400px;
+        border:5px solid rgba(0,0,0,.7);
+        border-radius: 30px; 
+        background: #FFF;
+      }
+
+      .controls {
+        width: 500px;        
+        border-radius: 10px;
+        border: 4px solid rgba(255,255,255,.5);
+        padding: 1em;
+        margin-bottom: 2em;
+      }
+
+    </style>     
+
+  </head>
+  <body>
+
+    <div class="content">
+
+      <div class="controls">
+        <input type="color" id="shape-color" class="color-picker">        
+        <input type="radio" id="radio-circle" name="shape" value="circle">Circle
+        <input type="radio" id="radio-triangle" name="shape" value="triangle">Triangle
+        <input type="radio" id="radio-square" name="shape" value="square">Square
+      </div>
+
+      <canvas id="myCanvas" class="canvas">
+      </canvas>   
+
+    </div>  
+
+    <script type="text/javascript">
+
+
+
+    </script>
+
+  </body>
+</html>

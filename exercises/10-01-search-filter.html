@@ -44,16 +44,7 @@
       </div>
 
       <div id="text-container">
-        <textarea id="original-text" rows="9" class="controls">
-Three Rings for the Elven-kings under the sky
-Seven for the Dwarf-lords in their halls of stone
-Nine for Mortal Men doomed to die
-One for the Dark Lord on his dark throne
-In the Land of Mordor where the Shadows lie
-One Ring to rule them all, One Ring to find them
-One Ring to bring them all, and in the darkness bind them
-In the Land of Mordor where the Shadows lie          
-        </textarea>
+        <textarea id="original-text" rows="9" class="controls"></textarea>
       </div>  
 
       <div class="results">
@@ -121,9 +112,10 @@ In the Land of Mordor where the Shadows lie
       // implementation
 
       // set initial values
-      var originalText = document.getElementById("text-container").textContent.trim();
+      var originalText = "Three Rings for the Elven-kings under the sky\nSeven for the Dwarf-lords in their halls of stone\nNine for Mortal Men doomed to die\nOne for the Dark Lord on his dark throne\nIn the Land of Mordor where the Shadows lie\nOne Ring to rule them all, One Ring to find them\nOne Ring to bring them all, and in the darkness bind them\nIn the Land of Mordor where the Shadows lie";
+      document.getElementById("original-text").textContent = originalText;      
+      document.getElementById("display-text").textContent = originalText;      
       searchFilter.setText(originalText);     
-      document.getElementById("display-text").textContent = originalText;
 
       // handler for filtering event
       function applyFilter(e){        
