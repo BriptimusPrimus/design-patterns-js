@@ -275,7 +275,6 @@ Editable properties should include:
 
       function selectDiv(id){
         cmdMan.addCommand("select", id);
-        //selectedDiv = document.getElementById(id) || null;
       }
 
       function unselectDiv(){
@@ -291,46 +290,27 @@ Editable properties should include:
       }
 
       function setBackgroundColor(){
-        // if (selectedDiv == null){
-        //   return;
-        // }
         var red = document.getElementById("background-color-red").value,
             green = document.getElementById("background-color-green").value,
             blue = document.getElementById("background-color-blue").value;
 
         cmdMan.addCommand("backgroundcolor", rgb(red, green, blue));            
-        // selectedDiv.style.backgroundColor = rgb(red, green, blue);         
       }
 
       function setBorderRadious(control){
-        // if (selectedDiv == null){
-        //   return;
-        // }   
-
         cmdMan.addCommand("borderrad", control.value);             
-        // selectedDiv.style.borderRadius = control.value + "px";          
       }
 
       function setBorderThickness(control){
-        // if (selectedDiv == null){
-        //   return;
-        // }       
-
         cmdMan.addCommand("bordertck", control.value); 
-        // selectedDiv.style.borderStyle = "solid";
-        // selectedDiv.style.borderWidth = control.value + "px ";  
       }
 
       function setBorderColor(){
-        // if (selectedDiv == null){
-        //   return;
-        // }        
         var red = document.getElementById("border-color-red").value,
             green = document.getElementById("border-color-green").value,
             blue = document.getElementById("border-color-blue").value;
 
         cmdMan.addCommand("bordercolor", rgb(red, green, blue));            
-        // selectedDiv.style.borderColor = rgb(red, green, blue);
       }
 
       function allowDrop(e){
@@ -349,15 +329,12 @@ Editable properties should include:
         var iddata = e.dataTransfer.getData("text");  
 
         cmdMan.addCommand("locate", iddata, e.target.id);
-        // e.target.appendChild(document.getElementById(iddata));
         
         if(e.target.id == "editbox"){
           cmdMan.addCommand("select", iddata);
-          // selectDiv(iddata);
         }
         else if (document.getElementById("editbox").childNodes.length < 1){
           cmdMan.addCommand("unselect");
-          // unselectDiv();
         }
       }
 
@@ -404,13 +381,7 @@ Editable properties should include:
           });
         document.getElementById("background-color")
           .addEventListener("change", function(e){
-            // if (selectedDiv == null){
-            //   return;
-            // }
-
             cmdMan.addCommand("backgroundcolor", this.value); 
-            // selectedDiv.style.backgroundColor = this.value;
-
             e.preventDefault();
             e.stopPropagation();
           });
@@ -435,13 +406,7 @@ Editable properties should include:
           });  
         document.getElementById("border-color")
           .addEventListener("change", function(e){
-            // if (selectedDiv == null){
-            //   return;
-            // }
-
             cmdMan.addCommand("bordercolor", this.value);
-            // selectedDiv.style.borderColor = this.value;
-
             e.preventDefault();
             e.stopPropagation();
           });                                      
