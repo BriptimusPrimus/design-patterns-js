@@ -1,0 +1,400 @@
+<!-- 
+1. Display a set of divs with visible borders.
+* A user must be able to drag & drop a div to a specially indicated area 
+* Any div placed in the designated area must be visually edited through control components such as color pickers and sliders. 
+Editable properties should include:
+   * border color
+   * border thickness
+   * background color
+   * rounded edges
+* The items must be able to be placed back, retaining any modifications made.
+-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Editable Divs</title>    
+
+    <style>
+      /* reset browser styles */
+      html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+      table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, 
+      figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,
+      time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+      }
+      article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+        display: block;
+      }
+      body {
+        line-height: 1.2;
+      }
+      ol { 
+        padding-left: 1.4em;
+        list-style: decimal;
+      }
+      ul {
+        padding-left: 1.4em
+        list-style: square;
+      }
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+      } 
+      /* end reset browser styles */
+
+      body {
+        background: #CDE6FF;
+        max-width: 1200px;        
+        margin: 0 auto;   
+        padding: 2em;
+      }
+
+      .red {
+        background: red;
+      }
+
+      .green {
+        background: green;
+      }      
+
+      .blue {
+        background: blue;
+      }               
+
+      div .wrapper {
+        background: white;  
+        border-radius: 0;
+        margin: 1em;
+        width: 15%;
+        height: 5em;        
+        float: left;        
+      }      
+
+      div .editable-div {
+        background-color: white;  
+        width: 90%;
+        height: 90%;   
+        position: relative;
+        margin:4px auto auto auto;
+        border: 1px solid black;
+        box-sizing: border-box;
+      }      
+
+      div .editable-div span{
+        position: absolute;
+        top: 25%;
+        left: 25%;        
+      }
+
+      .controls {
+        width: 100%;
+        height: 7.8em;        
+        border-radius: 10px;
+        border: 4px solid rgba(255,255,255,.5);
+      }
+
+      .controls div.components {
+        background: none;  
+        border: 2px solid rgba(255,255,255,.5);        
+        border-radius: 20px;        
+        margin-left: 1em;
+        margin-top: 0.3em;
+        width: 17%;
+        height: 90%;        
+        float: left;                
+      }
+
+      .controls div.components span {
+        font-size: .9em;
+        padding: 1.5em;
+      }
+
+      .colored-sqare {
+        width: 1em;
+        height: 1em;        
+        margin-left: 1em;
+        margin-top: .4em;
+        display: inline-block;
+      }      
+
+      .color-picker {
+        width: 2em;
+        height: 1.5em;        
+        margin-top: .4em;
+        display: inline-block;
+      }
+
+      .color-range{
+        width: 10em;
+        height: 1em;                
+        margin-left: 1em;
+        margin-top: .4em;
+      }
+
+      .range{
+        width: 10em;
+        height: 1em;                
+        margin-left: 3em;
+        margin-top: 2.5em;
+      } 
+
+      .note {
+        background: #E9F5FE;  
+        padding: 1em; 
+        margin: 1em;
+        border-radius: 20px;
+        width: 50%;
+        float: left;
+      }     
+
+      div .textwrap{
+        min-height: 5em;    
+      }
+
+      .note .commands-text {
+        color: #B1967C; 
+        margin-bottom: 1em; 
+      }            
+
+    </style>    
+
+  </head>
+  <body>
+
+    <div id="controls" class="controls">
+      
+      <div id="editbox" class="wrapper"></div>      
+      
+      <div id="background-color-controls" class="components">
+        <span>Background Color</span>
+        <input type="color" id="background-color" class="color-picker">
+        <div class="color-component">
+          <div class="colored-sqare red"></div>
+          <input type="range" id="background-color-red" class="color-range" min="0" max="255" value="0">
+        </div>
+        <div class="color-component">
+          <div class="colored-sqare green"></div>
+          <input type="range" id="background-color-green" class="color-range" min="0" max="255" value="0">
+        </div>
+        <div class="color-component">
+          <div class="colored-sqare blue"></div>
+          <input type="range" id="background-color-blue" class="color-range" min="0" max="255" value="0">
+        </div>        
+      </div>
+
+      <div id="border-thickness-controls" class="components">
+        <span>Border Thickness</span>        
+        <input type="range" id="border-thickness" class="range" min="0" max="10" value="0">        
+      </div>    
+
+      <div id="border-color-controls" class="components">
+        <span>Border Color</span>
+        <input type="color" id="border-color" class="color-picker">
+        <div class="color-component">
+          <div class="colored-sqare red"></div>
+          <input type="range" id="border-color-red" class="color-range" min="0" max="255" value="0">
+        </div>
+        <div class="color-component">
+          <div class="colored-sqare green"></div>
+          <input type="range" id="border-color-green" class="color-range" min="0" max="255" value="0">
+        </div>
+        <div class="color-component">
+          <div class="colored-sqare blue"></div>
+          <input type="range" id="border-color-blue" class="color-range" min="0" max="255" value="0">
+        </div>
+      </div>      
+      
+      <div id="rounded-edges-controls" class="components">
+        <span>Rounded Edges</span>
+        <input type="range" id="rounded-edges" class="range" min="0" max="80" value="0">        
+      </div>
+
+    </div>
+
+    <div id="main-container">
+      <div class="wrapper">
+        <div id="editable0" class="editable-div">
+          <span>editable box 0</span>
+        </div>
+      </div>                                                          
+    </div>
+
+    <div class="note">
+      <div class="textwrap"> 
+        <pre id="commands-text" class="commands-text" contenteditable="true"></pre>
+      </div>  
+    <div>
+
+    <script type="text/javascript">                
+
+      var selectedDiv = null;
+
+      function selectDiv(id){
+        selectedDiv = document.getElementById(id) || null;
+      }
+
+      function unselectDiv(){
+        selectedDiv = null;
+      }
+
+      function rgb(red, green, blue, alpha){
+        if (alpha){
+          return "rgba("+red+","+green+","+blue+","+alpha+")";  
+        }
+        return "rgb("+red+","+green+","+blue+")";
+      }
+
+      function setBackgroundColor(){
+        if (selectedDiv == null){
+          return;
+        }
+        var red = document.getElementById("background-color-red").value,
+            green = document.getElementById("background-color-green").value,
+            blue = document.getElementById("background-color-blue").value;
+        selectedDiv.style.backgroundColor = rgb(red, green, blue);         
+      }
+
+      function setBorderRadious(control){
+        if (selectedDiv == null){
+          return;
+        }        
+        selectedDiv.style.borderRadius = control.value + "px";          
+      }
+
+      function setBorderThickness(control){
+        if (selectedDiv == null){
+          return;
+        }        
+        selectedDiv.style.borderStyle = "solid";
+        selectedDiv.style.borderWidth = control.value + "px ";  
+      }
+
+      function setBorderColor(){
+        if (selectedDiv == null){
+          return;
+        }        
+        var red = document.getElementById("border-color-red").value,
+            green = document.getElementById("border-color-green").value,
+            blue = document.getElementById("border-color-blue").value;
+        selectedDiv.style.borderColor = rgb(red, green, blue);
+      }
+
+      function allowDrop(e){
+        e.preventDefault(); 
+      }
+
+      function drag(e){
+        e.dataTransfer.setData("text", e.target.id);
+      }
+
+      function drop(e){
+        if (e.target.className != "wrapper" 
+          || e.target.childNodes.length > 0){
+            return;        
+        }       
+        var iddata = e.dataTransfer.getData("text");        
+        e.target.appendChild(document.getElementById(iddata));
+        if(e.target.id == "editbox"){
+          selectDiv(iddata);
+        }
+        else if (document.getElementById("editbox").childNodes.length < 1){
+          unselectDiv();
+        }
+      }
+
+      window.onload = function(){
+
+        var divsNum = 13;
+        var divsHtml = "";
+        for (var i = 0; i < divsNum; i++) {
+          divsHtml += '<div class="wrapper" ondrop="drop(event)" ondragover="allowDrop(event)"><div id="editable' + i + 
+          '" class="editable-div" draggable="true" ondragstart="drag(event)"></div></div>';
+        };        
+        var container = document.getElementById("main-container");
+        container.innerHTML = divsHtml; 
+
+        // document.getElementById("commands-text").textContent = "Three Rings for the Elven-kings under the sky\nSeven for the Dwarf-lords in their halls of stone\nNine for Mortal Men doomed to die";
+
+        //add events
+        document.getElementById("editbox").addEventListener("drop", drop);
+        document.getElementById("editbox").addEventListener("dragover", allowDrop);
+
+        document.getElementById("background-color-red")
+          .addEventListener("change", function(e){
+            setBackgroundColor();
+            e.preventDefault();
+            e.stopPropagation();                 
+          });
+        document.getElementById("background-color-green")
+          .addEventListener("change", function(e){
+            setBackgroundColor();
+            e.preventDefault();
+            e.stopPropagation();                 
+          });
+        document.getElementById("background-color-blue")
+          .addEventListener("change", function(e){
+            setBackgroundColor();
+            e.preventDefault();
+            e.stopPropagation();                 
+          });
+        document.getElementById("background-color")
+          .addEventListener("change", function(e){
+            if (selectedDiv == null){
+              return;
+            }
+            selectedDiv.style.backgroundColor = this.value;
+            e.preventDefault();
+            e.stopPropagation();
+          });
+
+        document.getElementById("border-color-red")
+          .addEventListener("change", function(e){
+            setBorderColor();
+            e.preventDefault();
+            e.stopPropagation();                 
+          });
+        document.getElementById("border-color-green")
+          .addEventListener("change", function(e){
+            setBorderColor();
+            e.preventDefault();
+            e.stopPropagation();                 
+          });
+        document.getElementById("border-color-blue")
+          .addEventListener("change", function(e){
+            setBorderColor();
+            e.preventDefault();
+            e.stopPropagation();                 
+          });  
+        document.getElementById("border-color")
+          .addEventListener("change", function(e){
+            if (selectedDiv == null){
+              return;
+            }
+            selectedDiv.style.borderColor = this.value;
+            e.preventDefault();
+            e.stopPropagation();
+          });                                      
+
+        document.getElementById("rounded-edges")
+          .addEventListener("change", function(e){
+            setBorderRadious(this);
+            e.preventDefault();
+            e.stopPropagation();            
+          });
+
+        document.getElementById("border-thickness")
+          .addEventListener("change", function(e){
+            setBorderThickness(this);
+            e.preventDefault();
+            e.stopPropagation();            
+          });
+      }
+
+    </script>
+  </body>
+</html>
