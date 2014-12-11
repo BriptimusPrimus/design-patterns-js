@@ -158,10 +158,44 @@ Editable properties should include:
 
       .note .commands-text {
         color: #B1967C; 
-        margin-bottom: 1em; 
-      }            
+        margin-top: 1em; 
+      }  
+
+      button {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 14px;
+        color: #ffffff;
+        padding: 10px 20px;
+        background: -moz-linear-gradient(
+          top,
+          #fff3db 0%,
+          #ffc821 25%,
+          #ff3c00);
+        background: -webkit-gradient(
+          linear, left top, left bottom,
+          from(#fff3db),
+          color-stop(0.25, #ffc821),
+          to(#ff3c00));
+        -moz-border-radius: 16px;
+        -webkit-border-radius: 16px;
+        border-radius: 16px;
+        border: 1px solid #b85f00;
+        -moz-box-shadow:
+          0px 1px 3px rgba(000,000,000,0.5),
+          inset 0px -1px 0px rgba(255,255,255,0.7);
+        -webkit-box-shadow:
+          0px 1px 3px rgba(000,000,000,0.5),
+          inset 0px -1px 0px rgba(255,255,255,0.7);
+        box-shadow:
+          0px 1px 3px rgba(000,000,000,0.5),
+          inset 0px -1px 0px rgba(255,255,255,0.7);
+        text-shadow:
+          0px -1px 1px rgba(000,000,000,0.2),
+          0px 1px 0px rgba(255,255,255,0.3);
+      }               
 
     </style>    
+    <script type="text/javascript" src="command-manager.js"></script>
 
   </head>
   <body>
@@ -225,21 +259,28 @@ Editable properties should include:
     </div>
 
     <div class="note">
+      <button type="button" name="runButton" class="runButton" id="runButton">Go!</button>
+      <button type="button" name="undoButton" class="undoButton" id="undoButton">Undo</button>      
       <div class="textwrap"> 
         <pre id="commands-text" class="commands-text" contenteditable="true"></pre>
       </div>  
     <div>
 
+
+
     <script type="text/javascript">                
 
       var selectedDiv = null;
+      var cmdMan;
 
       function selectDiv(id){
-        selectedDiv = document.getElementById(id) || null;
+        cmdMan.addCommand("select", id);
+        //selectedDiv = document.getElementById(id) || null;
       }
 
       function unselectDiv(){
-        selectedDiv = null;
+        cmdMan.addCommand("unselect");
+        //selectedDiv = null;
       }
 
       function rgb(red, green, blue, alpha){
@@ -250,38 +291,46 @@ Editable properties should include:
       }
 
       function setBackgroundColor(){
-        if (selectedDiv == null){
-          return;
-        }
+        // if (selectedDiv == null){
+        //   return;
+        // }
         var red = document.getElementById("background-color-red").value,
             green = document.getElementById("background-color-green").value,
             blue = document.getElementById("background-color-blue").value;
-        selectedDiv.style.backgroundColor = rgb(red, green, blue);         
+
+        cmdMan.addCommand("backgroundcolor", rgb(red, green, blue));            
+        // selectedDiv.style.backgroundColor = rgb(red, green, blue);         
       }
 
       function setBorderRadious(control){
-        if (selectedDiv == null){
-          return;
-        }        
-        selectedDiv.style.borderRadius = control.value + "px";          
+        // if (selectedDiv == null){
+        //   return;
+        // }   
+
+        cmdMan.addCommand("borderrad", control.value);             
+        // selectedDiv.style.borderRadius = control.value + "px";          
       }
 
       function setBorderThickness(control){
-        if (selectedDiv == null){
-          return;
-        }        
-        selectedDiv.style.borderStyle = "solid";
-        selectedDiv.style.borderWidth = control.value + "px ";  
+        // if (selectedDiv == null){
+        //   return;
+        // }       
+
+        cmdMan.addCommand("bordertck", control.value); 
+        // selectedDiv.style.borderStyle = "solid";
+        // selectedDiv.style.borderWidth = control.value + "px ";  
       }
 
       function setBorderColor(){
-        if (selectedDiv == null){
-          return;
-        }        
+        // if (selectedDiv == null){
+        //   return;
+        // }        
         var red = document.getElementById("border-color-red").value,
             green = document.getElementById("border-color-green").value,
             blue = document.getElementById("border-color-blue").value;
-        selectedDiv.style.borderColor = rgb(red, green, blue);
+
+        cmdMan.addCommand("bordercolor", rgb(red, green, blue));            
+        // selectedDiv.style.borderColor = rgb(red, green, blue);
       }
 
       function allowDrop(e){
@@ -297,28 +346,39 @@ Editable properties should include:
           || e.target.childNodes.length > 0){
             return;        
         }       
-        var iddata = e.dataTransfer.getData("text");        
-        e.target.appendChild(document.getElementById(iddata));
+        var iddata = e.dataTransfer.getData("text");  
+
+        cmdMan.addCommand("locate", iddata, e.target.id);
+        // e.target.appendChild(document.getElementById(iddata));
+        
         if(e.target.id == "editbox"){
-          selectDiv(iddata);
+          cmdMan.addCommand("select", iddata);
+          // selectDiv(iddata);
         }
         else if (document.getElementById("editbox").childNodes.length < 1){
-          unselectDiv();
+          cmdMan.addCommand("unselect");
+          // unselectDiv();
         }
       }
 
-      window.onload = function(){
-
-        var divsNum = 13;
+      function initialize(){
+        document.getElementById("editbox").innerHTML = "";
+        var divsNum = 5;
         var divsHtml = "";
         for (var i = 0; i < divsNum; i++) {
-          divsHtml += '<div class="wrapper" ondrop="drop(event)" ondragover="allowDrop(event)"><div id="editable' + i + 
+          divsHtml += '<div class="wrapper" id="wrap' + i + 
+          '" ondrop="drop(event)" ondragover="allowDrop(event)"><div id="editable' + i + 
           '" class="editable-div" draggable="true" ondragstart="drag(event)"></div></div>';
         };        
         var container = document.getElementById("main-container");
         container.innerHTML = divsHtml; 
+      }
 
-        // document.getElementById("commands-text").textContent = "Three Rings for the Elven-kings under the sky\nSeven for the Dwarf-lords in their halls of stone\nNine for Mortal Men doomed to die";
+      window.onload = function(){
+
+        initialize();
+
+        document.getElementById("commands-text").textContent = "";
 
         //add events
         document.getElementById("editbox").addEventListener("drop", drop);
@@ -344,10 +404,13 @@ Editable properties should include:
           });
         document.getElementById("background-color")
           .addEventListener("change", function(e){
-            if (selectedDiv == null){
-              return;
-            }
-            selectedDiv.style.backgroundColor = this.value;
+            // if (selectedDiv == null){
+            //   return;
+            // }
+
+            cmdMan.addCommand("backgroundcolor", this.value); 
+            // selectedDiv.style.backgroundColor = this.value;
+
             e.preventDefault();
             e.stopPropagation();
           });
@@ -372,10 +435,13 @@ Editable properties should include:
           });  
         document.getElementById("border-color")
           .addEventListener("change", function(e){
-            if (selectedDiv == null){
-              return;
-            }
-            selectedDiv.style.borderColor = this.value;
+            // if (selectedDiv == null){
+            //   return;
+            // }
+
+            cmdMan.addCommand("bordercolor", this.value);
+            // selectedDiv.style.borderColor = this.value;
+
             e.preventDefault();
             e.stopPropagation();
           });                                      
@@ -393,6 +459,28 @@ Editable properties should include:
             e.preventDefault();
             e.stopPropagation();            
           });
+
+        // initialize Command Manager
+        cmdMan = new CommandManager(document.getElementById("commands-text"), initialize);
+
+        // buttons events
+        document.getElementById("runButton")
+          .addEventListener("click", function(e){
+            cmdMan.runMacro();
+          });        
+
+        document.getElementById("undoButton")
+          .addEventListener("click", function(e){
+            cmdMan.undo();
+          });
+
+        document.onkeydown = function(e) {
+          var evtobj = window.event? event : e
+          if (evtobj.keyCode == 90 && evtobj.ctrlKey){
+            cmdMan.undo();
+          };
+        }                
+
       }
 
     </script>
