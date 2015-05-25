@@ -129,8 +129,28 @@
 					expect(testFn).toBeDefined();				
 					expect(testFn).toThrow(new Error("input is a negative number"));
 				});
+				it('computes factorial in a iterative way', function(){
+					expect(iterativeFactorial(5)).toEqual(120);
+					expect(iterativeFactorial(5)).toBe(120);
+					expect(iterativeFactorial(4)).toBe(24);
+					expect(iterativeFactorial(6)).toBe(720);
+				});	
+				it('Factorial of 1 is 1. 1! = 1', function(){
+					expect(iterativeFactorial(1)).toBe(1);
+					expect(iterativeFactorial(1)).toEqual(1);
+				});
+				it('Factorial of 0 is 1. 0! = 1', function(){
+					expect(iterativeFactorial(0)).toBe(1);
+					expect(iterativeFactorial(0)).toEqual(1);
+				});				
+				it('throws error when input is a negative number', function(){
+					var testFn = function(){
+						iterativeFactorial(-1);
+					}
+					expect(testFn).toBeDefined();				
+					expect(testFn).toThrow(new Error("input is a negative number"));
+				});				
 			});
-
 
 		</script>
 	</head>
