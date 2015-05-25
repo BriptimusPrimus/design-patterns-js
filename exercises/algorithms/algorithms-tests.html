@@ -6,10 +6,11 @@
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.4/jasmine-html.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.4/boot.min.js"></script>
 
-		<!-- included algorithm files for testing -->
+		<!-- included algorithms files for testing -->
 		<script type="text/javascript" src="binary-search.js"></script>
 		<script type="text/javascript" src="digit-sum5.js"></script>
 		<script type="text/javascript" src="factorial.js"></script>
+		<script type="text/javascript" src="find-loop-in-linked-list.js"></script>
 
 		<script type="text/javascript">
 			function adder (a, b) {
@@ -151,6 +152,108 @@
 					expect(testFn).toThrow(new Error("input is a negative number"));
 				});				
 			});
+
+			describe('Find loop in linked list', function(){
+				it('finds loop in list with loop', function(){
+					var count = 0,
+						head = {
+							value : count++,
+							next : {}
+						};
+
+					head.next = {
+						value : count++,
+						next : {
+							value : count++,
+							next : {
+								value : count++,
+								next : {
+									value : count++,
+									next : {
+										value : count++,
+										next : head
+									}
+								}
+							} 	
+						}
+					}
+
+					expect(head).toBeDefined();
+					expect(head.value).toEqual(0);
+					expect(head.next).toBeDefined();
+					expect(head.next.next).not.toBe(head);
+					expect(head.next.next.next.next.next.next).toBe(head);
+					expect(head.next.next.next.next.next.value).toBe(5);
+
+					expect(findLoop(head)).toBe(true);
+					expect(findLoop(head)).toBeTruthy();
+				});
+				it('finds no loop in list with no loop', function(){
+					var count = 0,
+						head = {
+							value : count++,
+							next : {}
+						};
+
+					head.next = {
+						value : count++,
+						next : {
+							value : count++,
+							next : {
+								value : count++,
+								next : {
+									value : count++,
+									next : {
+										value : count++,
+										next : null
+									}
+								}
+							} 	
+						}
+					}
+
+					expect(head).toBeDefined();
+					expect(head.value).toEqual(0);
+					expect(head.next).toBeDefined();
+					expect(head.next.next.next.next.next.next).not.toBe(head);
+					expect(head.next.next.next.next.next.value).toBe(5);
+
+					expect(findLoop(head)).toBe(false);
+					expect(findLoop(head)).toBeFalsy();					
+				});	
+				it('finds no loop in empty list', function(){
+					expect(findLoop()).toBe(false);
+					expect(findLoop({})).toBe(false);
+					expect(findLoop(null)).toBe(false);
+				});
+				it('finds no loop in list with only one node', function(){
+					var	head = {
+							value : 0,
+							next : null
+						};
+					expect(findLoop(head)).toBe(false);
+					expect(findLoop(head)).toBeFalsy();
+				});	
+				it('finds loop in list with only one node that points to itself', function(){
+					var	head = {
+							value : 0,
+							next : null
+						};
+					head.next = head;
+					expect(findLoop(head)).toBe(true);
+				});	
+				it('finds loop in list with two nodes pointing to each other', function(){
+					var	head = {
+							value : 0,
+							next : null
+						};
+					head.next = {
+						value : 1,
+						next : head
+					};
+					expect(findLoop(head)).toBe(true);
+				});					
+			})
 
 		</script>
 	</head>
