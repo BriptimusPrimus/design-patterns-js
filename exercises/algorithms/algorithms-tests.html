@@ -113,8 +113,14 @@
 					expect(recursiveFactorial(5)).toBe(120);
 					expect(recursiveFactorial(4)).toBe(24);
 					expect(recursiveFactorial(6)).toBe(720);
+				});
+				it('Factorial of 1 is 1. 1! = 1', function(){
 					expect(recursiveFactorial(1)).toBe(1);
-					expect(recursiveFactorial(0)).toBe(1);					
+					expect(recursiveFactorial(1)).toEqual(1);
+				});
+				it('Factorial of 0 is 1. 0! = 1', function(){
+					expect(recursiveFactorial(0)).toBe(1);
+					expect(recursiveFactorial(0)).toEqual(1);
 				});				
 				it('throws error when input is a negative number', function(){
 					var testFn = function(){
