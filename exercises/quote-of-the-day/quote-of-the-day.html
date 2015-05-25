@@ -1,0 +1,329 @@
+<!-- 
+Application that shows a message for every day of the year
+-->
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <head>
+    <title>365.25</title>    
+    <style>
+      /* reset browser styles */
+      html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp,small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend,
+      table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, 
+      figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary,
+      time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+      }
+      article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+        display: block;
+      }
+      body {
+        line-height: 1.2;
+      }
+      ol { 
+        padding-left: 1.4em;
+        list-style: decimal;
+      }
+      ul {
+        padding-left: 1.4em
+        list-style: square;
+      }
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+      } 
+      /* end reset browser styles */
+
+      body {
+        background: #CDE6FF;
+        padding-top: 20px;
+        width: 1200px;
+        margin: 0 auto;   
+        font-size: 1.2em;
+      }
+
+      .notesContainer {
+        width: 100%;
+        position: center;
+      }
+
+      div .note {
+        background: #E9F5FE;  
+        padding: 1em; 
+        margin: 1em;
+        border-radius: 20px;
+        width: 35%;
+        float: left;
+      }
+
+      div .textwrap{
+        min-height: 5em;    
+      }
+
+      .note p {
+        color: #B1967C; 
+        margin-bottom: 1em; 
+      }
+
+      .controls {
+        margin-top: 2em;  
+      }
+
+      .dates {
+        display: inline-block;
+        margin-left: 2em; 
+      }
+
+      .dates p {
+        color: black;
+        margin-top: -1.1em; 
+      }
+
+      .dates p span{
+        font-style: italic;
+      }
+
+      .date-picker{
+        margin-left: 2em;  
+      }
+
+      input {
+          border: 2px solid #e2e2e2;
+          color: #333;
+          font-size: 1.2em;
+          margin: 5px 0 6px 0;
+          padding: 5px;
+          width: 200px;
+      }
+
+    </style>    
+  </head>
+  <body>
+
+    <input type="date" name="new" class="date-picker" id="dateControl">
+    <div id="notesContainer" class="notesContainer">  
+
+      <div class="note">
+        <div class="textwrap">
+          <p class="text" contenteditable="true" id="quote-element">            
+          <p>
+        </div>
+        <div class="controls">                    
+          <div class="dates">
+            <p>Autor: <span id="author-element"></span></p>            
+          </div>     
+        </div>
+      </div>
+
+    </div>
+
+    <script type="text/javascript"> 
+
+var AllQuotes = {
+  "01-01" :  
+  { 
+    quote: "La primera impresión es más importante que todas las anteriores.",
+    author: ""
+  },
+  "02-01" :  
+  { 
+    quote: "Por dinero soy capaz hasta de trabajar.",
+    author: ""
+  }, 
+  "03-01" :  
+  { 
+    quote: "La ignorancia es la clave de la felicidad.",
+    author: ""
+  },
+  "04-01" :  
+  { 
+    quote: "Hay un mundo mejor, pero es más caro.",
+    author: ""
+  },
+  "05-01" :  
+  { 
+    quote: "Es la naturaleza del ser humano ir en contra de su propia naturaleza.",
+    author: "César Andueza"
+  },  
+  "06-01" :  
+  { 
+    quote: "Si supieran cuanto me divierto trabajando, no me pagarían.",
+    author: "Roberto Flores"
+  },
+  "07-01" :  
+  { 
+    quote: "La mejor herramienta para la felicidad es el auto engaño.",
+    author: ""
+  },
+  "08-01" :  
+  { 
+    quote: "Entre más se sabe, más conciente se es de cuanto se ignora.",
+    author: ""
+  },
+  "09-01" :  
+  { 
+    quote: "Antes el hombre temía el eclipse solar, ahora teme el fallo de conexión a internet.",
+    author: ""
+  },
+  "10-01" :  
+  { 
+    quote: "No es buena compañía quien no sabe estar solo.",
+    author: ""
+  },
+  "11-01" :  
+  { 
+    quote: "Si necesitas temer a Dios para evitar hacer mal al prójimo, lo que te falta es empatía, conciencia y sentido común, no espiritualidad.",
+    author: ""
+  },
+  "12-01" :  
+  { 
+    quote: "Mi única certeza es la duda.",
+    author: "José Miguel González Carpio"
+  },
+  "13-01" :  
+  { 
+    quote: "Somos sólamente el producto de nuestros traumas.",
+    author: ""
+  },
+  "14-01" :  
+  { 
+    quote: "No permitas que la prisa te detenga.",
+    author: ""
+  },
+  "15-01" :  
+  { 
+    quote: 'Primero están las cosas que "sabemos". Luego están las cosas que sabemos que no sabemos, que siempre son muchas más. Por último está el aparentemente infinito universo de las cosas que "no sabemos que no sabemos".',
+    author: ""
+  },
+  "16-01" :  
+  { 
+    quote: "A veces quiciera ser hacker, luego me acuerdo de la NSA y se me pasa.",
+    author: ""
+  },
+  "17-01" :  
+  { 
+    quote: "Los japoneses se levantan 12 horas antes que nosotros. Por eso están tan adelantados.",
+    author: ""
+  },
+  "18-01" :  
+  { 
+    quote: "Si voy a tener un pasado, prefiero que sea de opción múltiple.",
+    author: "The Jocker"
+  },
+  "19-01" :  
+  { 
+    quote: "Tu nivel de educación es en parte mérito propio, en parte mérito de tu familia, pero en mayor parte mérito de las circunstancias. Un pueblo no podrá ser educado sin las circunstancias apropiadas.",
+    author: ""
+  },
+  "20-01" :  
+  { 
+    quote: "Ya sabes que me encabrona que me tomes en cuenta.",
+    author: ""
+  },
+  "21-01" :  
+  { 
+    quote: "A la larga, una sociedad jerárquica solo sería posible basándose en la pobreza y en la ignorancia.",
+    author: "1984 - George Orwell"
+  },
+  "22-01" :  
+  { 
+    quote: "Si quieres guiar, debes aprender a seguir.",
+    author: "Jeor Mormont"
+  },   
+  "23-01" :  
+  { 
+    quote: "Los programadores cuentan lineas de código para dormir.",
+    author: ""
+  }, 
+  "24-01" :  
+  { 
+    quote: "El 70% de las estadísticas son falsas.",
+    author: ""
+  },  
+  "25-01" :  
+  { 
+    quote: "En vez de aclararme mis dudas, me adudaron mis claras.",
+    author: "Roberto Flores"
+  },
+  "00-00" :  
+  { 
+    quote: "",
+    author: ""
+  },
+  "00-00" :  
+  { 
+    quote: "",
+    author: ""
+  },     
+  "29-02" :  
+  { 
+    quote: "Tienes razón.",
+    author: ""
+  },                      
+  "00-00" :  
+  { 
+    quote: "",
+    author: ""
+  }  
+};
+    
+  </script>
+
+  <script type="text/javascript">
+
+      var dateControl;
+
+      function QuoteByDate(formated)
+      {
+        console.log(formated);
+        var day = formated.slice(8),
+            month = formated.slice(5, -3);
+        console.log("day: " + day + " month: " + month);
+
+
+        var quoteObj = AllQuotes[day + "-" + month] || 
+          {
+            quote: "Hoy no hay frase",
+            author: ""            
+          }
+
+        var container = document.getElementById("quote-element");
+            authSpan = document.getElementById("author-element");
+        
+        container.innerHTML = quoteObj.quote;           
+        authSpan.innerHTML = quoteObj.author;  
+      }
+
+      function ShowDayQuote() {
+        var picker = dateControl || document.getElementById("dateControl");
+        QuoteByDate(picker.value);
+      }
+
+      window.onload = function(){
+
+        //bind the change event to our function
+        dateControl = document.getElementById("dateControl");
+        dateControl.addEventListener("change", ShowDayQuote);
+
+        //set the default date (today)
+        var now = new Date(),        
+            formated = [now.getFullYear(), 
+                        (now.getMonth() + 1) < 10 ? "0" + (now.getMonth() + 1) : (now.getMonth() + 1), 
+                        now.getDate() < 10 ? "0" + now.getDate() : now.getDate() ]
+                          .join("-");
+
+        dateControl.value = formated;
+
+        //force the first event in order to show quote
+        ShowDayQuote();
+
+      }
+
+    </script>
+  </body>
+</html>

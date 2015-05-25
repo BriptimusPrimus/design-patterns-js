@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.4/jasmine.min.css">
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.4/jasmine.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.4/jasmine-html.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.4/boot.min.js"></script>
+
+		<script type="text/javascript" src="binary-search.js"></script>
+		<script type="text/javascript">
+			function adder (a, b) {
+				return a+b;
+			}
+		</script>
+		<script type="text/javascript">
+			describe('the adder function',function ( ) {
+				it('should add 2 numbers',function ( ) {
+					expect(adder(2,3)).toBe(5);
+				});
+			});
+
+			describe('Binary Search Algorithm', function(){
+				it('should find key with recursive version', function(){
+					//remember set must be sorted
+					 var list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+					expect(recursiveBinarySearch(list, 2, 0, list.length - 1)).toBe(2);
+					
+					list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 16, 20];
+					expect(recursiveBinarySearch(list, 14, 0, list.length - 1)).toBe(14);
+
+					list = [1, 2, 3, 4, 5];
+					expect(recursiveBinarySearch(list, 1, 0, list.length - 1)).toBe(1);
+
+					//expect(recursiveBinarySearch(list, 13, 0, list.length - 1)).toBeUndefined();
+					expect(recursiveBinarySearch(list, 13, 0, list.length - 1)).toBe(-1);
+				});
+
+				it('should return -1 when looking for non-existent key with recursive version', function(){
+					var list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+					//expect(recursiveBinarySearch(list, 13, 0, list.length - 1)).toBeUndefined();
+					expect(recursiveBinarySearch(list, 13, 0, list.length - 1)).toBe(-1);
+					
+					list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 16, 20];
+					expect(recursiveBinarySearch(list, -2, 0, list.length - 1)).toBe(-1);
+
+					list = [1, 2, 3, 4, 5];
+					expect(recursiveBinarySearch(list, 6, 0, list.length - 1)).toBe(-1);					
+				});
+
+				it('should find key with iterative version', function(){
+					//remember set must be sorted
+					var list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+					expect(iterativeBinarySearch(list, 2, 0, list.length - 1)).toBe(2);
+					
+					list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 16, 20];
+					expect(iterativeBinarySearch(list, 14, 0, list.length - 1)).toBe(14);
+
+					list = [1, 2, 3, 4, 5];
+					expect(iterativeBinarySearch(list, 1, 0, list.length - 1)).toBe(1);
+				});
+
+				it('should return -1 when looking for non-existent key with iterative version', function(){
+					var list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+					//expect(iterativeBinarySearch(list, 13, 0, list.length - 1)).toBeUndefined();
+					expect(iterativeBinarySearch(list, 13, 0, list.length - 1)).toBe(-1);
+					
+					list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 11, 12, 14, 16, 20];
+					expect(iterativeBinarySearch(list, -2, 0, list.length - 1)).toBe(-1);
+
+					list = [1, 2, 3, 4, 5];
+					expect(iterativeBinarySearch(list, 6, 0, list.length - 1)).toBe(-1);					
+				});				
+			});
+
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
+
+
