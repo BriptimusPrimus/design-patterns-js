@@ -11,6 +11,7 @@
 		<script type="text/javascript" src="digit-sum5.js"></script>
 		<script type="text/javascript" src="factorial.js"></script>
 		<script type="text/javascript" src="find-loop-in-linked-list.js"></script>
+		<script type="text/javascript" src="find-missing-number-in-array.js"></script>
 
 		<script type="text/javascript">
 			function adder (a, b) {
@@ -253,7 +254,23 @@
 					};
 					expect(findLoop(head)).toBe(true);
 				});					
+			});
+
+			describe('Find missing number in array', function(){
+				it('finds the one missing number in a middle sized list', function(){
+					expect(findMissingNumber([2, 4, 1, 7, 3, 8, 6])).toBe(5);
+					expect(findMissingNumber([2, 4, 1, 7, 5, 8, 6])).toBe(3);
+					expect(findMissingNumber([2, 4, 1, 7, 5, 3, 6])).toBe(8);
+					expect(findMissingNumber([2, 4, 8, 7, 5, 3, 6])).toBe(1);
+					expect(findMissingNumber([2, 4, 8, 7, 5, 3, 1])).toBe(6);
+				});
+				it('finds the missing number in a two elements list', function(){
+					expect(findMissingNumber([3, 1])).toBe(2);
+					expect(findMissingNumber([2, 1])).toBe(3);
+					expect(findMissingNumber([2, 3])).toBe(1);
+				});
 			})
+			
 
 		</script>
 	</head>
