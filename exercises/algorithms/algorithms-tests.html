@@ -13,6 +13,7 @@
 		<script type="text/javascript" src="find-loop-in-linked-list.js"></script>
 		<script type="text/javascript" src="find-missing-number-in-array.js"></script>
 		<script type="text/javascript" src="heapsort.js"></script>
+		<script type="text/javascript" src="quicksort.js"></script>
 
 		<script type="text/javascript">
 			function adder (a, b) {
@@ -327,6 +328,85 @@
 				it('sorts list with repeated numbers', function(){
 					var A = [4, 6, 1, 8, 4, 7, 7, 0, 5, 4, 2, 1, 9, 3, 7, 2];
 					heapsort(A);
+					console.log(A);
+
+					expect(A[0]).toEqual(0);
+					expect(A[1]).toEqual(1);
+					expect(A[2]).toEqual(1);
+					expect(A[3]).toEqual(2);
+					expect(A[4]).toEqual(2);
+
+					expect(A[5]).toEqual(3);
+					expect(A[6]).toEqual(4);
+					expect(A[7]).toEqual(4);
+					expect(A[8]).toEqual(4);
+					expect(A[9]).toEqual(5);
+
+					expect(A[10]).toEqual(6);
+					expect(A[11]).toEqual(7);
+					expect(A[12]).toEqual(7);
+					expect(A[13]).toEqual(7);
+					expect(A[14]).toEqual(8);
+
+					expect(A[15]).toEqual(9);
+				});												
+			});
+
+			describe('Quicksort', function(){
+				it('sorts middle sized list', function(){
+					var A = [4, 6, 8, 0, 5, 2, 1, 9, 3, 7];
+					quicksort(A);
+					console.log(A);
+
+					expect(A[0]).toEqual(0);
+					expect(A[1]).toEqual(1);
+					expect(A[2]).toEqual(2);
+					expect(A[3]).toEqual(3);
+					expect(A[4]).toEqual(4);
+
+					expect(A[5]).toEqual(5);
+					expect(A[6]).toEqual(6);
+					expect(A[7]).toEqual(7);
+					expect(A[8]).toEqual(8);
+					expect(A[9]).toEqual(9);
+				});
+				it('sorts long sized list', function(){
+					var A = [4, 6, 8, 0, 5, 2, 1, 9, 16, 20, 7, 11, 14, 3, 12];
+					quicksort(A);
+					console.log(A);
+
+					expect(A[0]).toEqual(0);
+					expect(A[1]).toEqual(1);
+					expect(A[2]).toEqual(2);
+					expect(A[3]).toEqual(3);
+					expect(A[4]).toEqual(4);
+
+					expect(A[5]).toEqual(5);
+					expect(A[6]).toEqual(6);
+					expect(A[7]).toEqual(7);
+					expect(A[8]).toEqual(8);
+					expect(A[9]).toEqual(9);
+
+					expect(A[10]).toEqual(11);
+					expect(A[11]).toEqual(12);
+					expect(A[12]).toEqual(14);
+					expect(A[13]).toEqual(16);
+					expect(A[14]).toEqual(20);
+				});
+				it('sorts small sized list', function(){
+					var A = [3, 5, 2, 1, 4];
+					quicksort(A);
+					console.log(A);
+
+					expect(A[0]).toEqual(1);
+					expect(A[1]).toEqual(2);
+					expect(A[2]).toEqual(3);
+					expect(A[3]).toEqual(4);
+					expect(A[4]).toEqual(5);
+				});
+				it('sorts list with repeated numbers', function(){
+					var A = [4, 6, 1, 8, 4, 7, 7, 0, 5, 4, 2, 1, 9, 3, 7, 2];
+					quicksort(A);
 					console.log(A);
 
 					expect(A[0]).toEqual(0);
