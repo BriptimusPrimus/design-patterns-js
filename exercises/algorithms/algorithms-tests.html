@@ -12,6 +12,7 @@
 		<script type="text/javascript" src="factorial.js"></script>
 		<script type="text/javascript" src="find-loop-in-linked-list.js"></script>
 		<script type="text/javascript" src="find-missing-number-in-array.js"></script>
+		<script type="text/javascript" src="heapsort.js"></script>
 
 		<script type="text/javascript">
 			function adder (a, b) {
@@ -275,6 +276,7 @@
 				it('sorts middle sized list', function(){
 					var A = [4, 6, 8, 0, 5, 2, 1, 9, 3, 7];
 					heapsort(A);
+					console.log(A);
 
 					expect(A[0]).toEqual(0);
 					expect(A[1]).toEqual(1);
@@ -291,6 +293,7 @@
 				it('sorts long sized list', function(){
 					var A = [4, 6, 8, 0, 5, 2, 1, 9, 16, 20, 7, 11, 14, 3, 12];
 					heapsort(A);
+					console.log(A);
 
 					expect(A[0]).toEqual(0);
 					expect(A[1]).toEqual(1);
@@ -313,6 +316,7 @@
 				it('sorts small sized list', function(){
 					var A = [3, 5, 2, 1, 4];
 					heapsort(A);
+					console.log(A);
 
 					expect(A[0]).toEqual(1);
 					expect(A[1]).toEqual(2);
@@ -323,6 +327,7 @@
 				it('sorts list with repeated numbers', function(){
 					var A = [4, 6, 1, 8, 4, 7, 7, 0, 5, 4, 2, 1, 9, 3, 7, 2];
 					heapsort(A);
+					console.log(A);
 
 					expect(A[0]).toEqual(0);
 					expect(A[1]).toEqual(1);
