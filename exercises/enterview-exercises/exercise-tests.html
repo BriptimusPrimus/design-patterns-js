@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.4/jasmine.min.css">
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.4/jasmine.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.4/jasmine-html.js"></script>
+		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jasmine/2.3.4/boot.min.js"></script>
+
+		<!-- included algorithms files for testing -->
+		<script type="text/javascript" src="02-anagrams/anagrams.js"></script>
+
+		<script type="text/javascript">
+			describe('Anagrams Finder', function ( ) {
+				var list = "acres,cares,races,scare,actors,costar,castor,airmen,marine,remain,alert,alter,later,alerted,altered,rel,ted,treadle,amen,mane,mean,name,arches,chaser,search,are,arrest,rarest,raters,starer,artist,strait,traits,arcs,cars,scar,ear,era";    
+				beforeEach(function() {
+				  anagramsFinder.setDictionary(list, ",");
+				});				
+				it('sets list of words', function ( ) {
+					//function setDictionary does not return
+					expect(anagramsFinder.setDictionary("this", "")).toBeFalsy();
+				});
+				it('gets empty list of anagrams not defined in dictionary', function(){
+					expect(anagramsFinder.getAnagrams("thisworisnotindictionary") == false).toBeTruthy(true);
+				});
+				it('gets anagrams of the word "races"', function(){
+					var arr = anagramsFinder.getAnagrams("races");
+				    for (var i = 0, l = arr.length; i < l; i++) {
+				      console.log(arr[i]);
+				    };
+				    expect(arr).toBeTruthy();
+				    expect(arr.length).toEqual(4);
+				    expect(arr).toContain("acres");
+				    expect(arr).toContain("cares");
+				    expect(arr).toContain("races");
+				    expect(arr).toContain("scare");
+				});
+				it('gets anagrams of the word "ear"', function(){
+					var arr = anagramsFinder.getAnagrams("ear");
+				    for (var i = 0, l = arr.length; i < l; i++) {
+				      console.log(arr[i]);
+				    };
+					expect(arr).toBeTruthy();
+				    expect(arr.length).toEqual(3);
+				    expect(arr).toContain("era");
+				    expect(arr).toContain("are");
+				});
+			});			
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
