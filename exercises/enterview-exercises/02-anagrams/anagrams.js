@@ -9,7 +9,8 @@ var anagramsFinder = (function(){
     var key = word.split("").sort().join("");
     if (dictionary[key]){
       //add word to existing array of the key
-      dictionary[key].push(word);
+      if (dictionary[key].indexOf(word) == -1)
+        dictionary[key].push(word);      
     }
     else {
       //initialize new array

@@ -8,10 +8,11 @@
 
 		<!-- included algorithms files for testing -->
 		<script type="text/javascript" src="02-anagrams/anagrams.js"></script>
+		<script type="text/javascript" src="04-reverse-string/reverse-string.js"></script>
 
 		<script type="text/javascript">
 			describe('Anagrams Finder', function ( ) {
-				var list = "acres,cares,races,scare,actors,costar,castor,airmen,marine,remain,alert,alter,later,alerted,altered,rel,ted,treadle,amen,mane,mean,name,arches,chaser,search,are,arrest,rarest,raters,starer,artist,strait,traits,arcs,cars,scar,ear,era";    
+				var list = "cares,acres,cares,cares,races,scare,actors,costar,castor,airmen,marine,remain,alert,alter,later,alerted,altered,rel,ted,treadle,amen,mane,mean,name,arches,chaser,search,are,arrest,rarest,raters,starer,artist,strait,traits,arcs,cars,scar,ear,era";    
 				beforeEach(function() {
 				  anagramsFinder.setDictionary(list, ",");
 				});				
@@ -24,10 +25,8 @@
 				});
 				it('gets anagrams of the word "races"', function(){
 					var arr = anagramsFinder.getAnagrams("races");
-				    // for (var i = 0, l = arr.length; i < l; i++) {
-				    //   console.log(arr[i]);
-				    // };
 				    expect(arr).toBeTruthy();
+				    //tests that reapeted words don't add to the dictionary
 				    expect(arr.length).toEqual(4);
 				    expect(arr).toContain("acres");
 				    expect(arr).toContain("cares");
@@ -36,15 +35,19 @@
 				});
 				it('gets anagrams of the word "ear"', function(){
 					var arr = anagramsFinder.getAnagrams("ear");
-				    // for (var i = 0, l = arr.length; i < l; i++) {
-				    //   console.log(arr[i]);
-				    // };
 					expect(arr).toBeTruthy();
 				    expect(arr.length).toEqual(3);
 				    expect(arr).toContain("era");
 				    expect(arr).toContain("are");
 				});
-			});			
+			});
+
+			describe('Strings Reverser', function ( ) {
+				it('reverse the word "era" to "are"', function ( ) {
+					expect(stringReverser.reverse("era")).toBeTruthy();
+					expect(stringReverser.reverse("era")).toBe("are");
+				});
+			});	
 		</script>
 	</head>
 	<body>
