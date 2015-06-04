@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Sticky List</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            #sticky-wrapper *{
+                margin: 0;
+                padding: 0;
+                box-sizing:border-box;
+            }
+            #sticky-wrapper{
+                height: 10em;
+                overflow-y:scroll;
+                width: 15em;
+                border: .2em solid olive;
+                background-color: lightblue;
+            }
+            #sticky-wrapper ul li{
+                list-style: none;
+                padding-left: 3em;
+            }
+            #sticky-list .header{
+                position: relative;
+                font-weight: bolder;
+                padding-left: 2em;
+                font-size: 1.2em;
+                border: .2em solid gray;
+                background-color: #eee;
+            }
+        </style>
+    </head>
+    <body>  
+        <main id="sticky-main">
+            <div id="sticky-wrapper">
+                <ul id="sticky-list">
+                    <li class="header">A</li><li>abc</li><li>acd</li><li>ade</li><li>aef</li><li>afg</li><li>abc</li><li>acd</li><li>ade</li><li>aef</li>
+                    <li class="header">B</li><li>bac</li><li>bcd</li><li>bde</li><li>bef</li><li>bac</li><li>bcd</li><li>bde</li><li>bde</li><li>bde</li><li>bef</li>
+                    <li class="header">C</li><li>cab</li><li>cde</li><li>cef</li><li>cfg</li><li>cgh</li><li>cab</li><li>cde</li><li>cef</li><li>cfg</li><li>cgh</li>
+                    <li class="header">D</li><li>dab</li><li>dbc</li><li>def</li><li>dfg</li><li>dgh</li><li>dab</li><li>dbc</li><li>def</li><li>dfg</li><li>dgh</li><li>dab</li><li>dbc</li><li>def</li><li>dfg</li><li>dgh</li>
+                    <li class="header">E</li><li>edab</li><li>edbc</li><li>edef</li><li>edfg</li><li>edgh</li><li>edab</li><li>edbc</li><li>edef</li><li>edfg</li><li>edgh</li><li>edab</li><li>edbc</li><li>edef</li><li>edfg</li><li>edgh</li><li>edhi</li>
+                    <li class="header">F</li><li>fedab</li><li>fedbc</li><li>fedef</li><li>fedfg</li><li>fedgh</li><li>fedab</li><li>fedbc</li><li>fedef</li><li>fedfg</li><li>fedgh</li><li>fedab</li><li>fedbc</li><li>fedef</li><li>fedfg</li><li>fedgh</li><li>fedhi</li>
+                    <li class="header">G</li><li>gbrtn</li><li>ggvre</li><li>gwdwe</li>
+                    <li class="header">H</li><li>hwdwe</li><li>hwdwe</li>
+                    <li class="header">I</li><li>iwdwe</li><li>iwdwe</li><li>iwdwe</li><li>iwdwe</li><li>iwdwe</li><li>iwdwe</li><li>iwdwe</li><li>iwdwe</li>
+                </ul>
+            </div>
+        </main>  
+        <script>
+            var headers = document.getElementsByClassName('header'),
+                stickyWrapper = document.getElementById('sticky-wrapper'),
+                initialPositions = [],
+                itemHeight = 24;
+
+            // cache initial positions
+            for (var i = 0, l = headers.length; i < l; i++) {
+                initialPositions.push(headers[i].offsetTop - stickyWrapper.offsetTop);
+                console.log(headers[i].offsetTop + " - " + stickyWrapper.offsetTop);
+            };
+
+            stickyWrapper.addEventListener('scroll', function ( ) {
+                var currOffset = stickyWrapper.scrollTop;
+                console.log("\n current scroll top = " + currOffset);
+
+                // for each header
+                for (var i = 0, l = headers.length; i < l; i++) {
+
+                    // find current position
+                    var difference = initialPositions[i] - currOffset;
+
+                    // // If a following header is "pushing up" adjust
+                    // var adjust = !headers[i+1] ? 0 :
+                    //         initialPositions[i+1] - currOffset < itemHeight ?
+                    //             initialPositions[i+1] - currOffset - itemHeight
+                    //             :0;
+
+                    // var nextTop = difference < 0 ?
+                    //                 currOffset - initialPositions[i] + adjust + 'px':
+                    //                 '0px';
+                    // headers[i].style.top = nextTop;
+
+                    var nextTop = difference < 0 ?
+                                    currOffset - initialPositions[i] + 'px':
+                                    '0px';
+                    console.log("cOf - iPos[i]: " + currOffset + " - " + initialPositions[i] + " = " + nextTop);
+                    headers[i].style.top = nextTop;
+                    console.log("headers[i] " + headers[i].textContent + " top = " + headers[i].style.top);                  
+
+                    //reset previous computed value
+                    if(nextTop !== '0px' && i > 0){
+                        // headers[i-1].style.top = '0px';
+                        console.log("   headers[i-1] " + headers[i-1].textContent + " top = " + headers[i-1].style.top);                        
+                    }
+                }
+            });
+        </script>      
+    </body>
+</html>
