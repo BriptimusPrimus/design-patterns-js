@@ -9,6 +9,8 @@
 		<!-- included algorithms files for testing -->
 		<script type="text/javascript" src="02-anagrams/anagrams.js"></script>
 		<script type="text/javascript" src="04-reverse-string/reverse-string.js"></script>
+		<script type="text/javascript" src="05-array-intersection/array-intersection.js"></script>
+		<script type="text/javascript" src="06-string-permutations/string-permutations.js"></script>
 
 		<script type="text/javascript">
 			describe('Anagrams Finder', function ( ) {
@@ -47,7 +49,64 @@
 					expect(stringReverser.reverse("era")).toBeTruthy();
 					expect(stringReverser.reverse("era")).toBe("are");
 				});
-			});	
+			});
+
+			describe('Arrays Intersection', function( ) {
+				it('intersects two arrays iteratively', function(){
+					var a = [5,6,7,8,9,15],
+						b = [7,8,9,11,12,13];
+					var intersect = ArrayIntersect.iterativeIntersect(a, b);
+					expect(intersect).toBeTruthy();
+					expect(intersect).toContain(7);
+					expect(intersect).toContain(8);
+					expect(intersect).toContain(9);
+				});
+				it('process iteratively two arrays with no intersection', function(){
+					var a = [5,6,7,8,9,15],
+						b = [11,12,13,17,19];
+					var intersect = ArrayIntersect.iterativeIntersect(a, b);
+					expect(intersect.length > 0).toBe(false);
+				});
+				it('intersects two arrays using hashes', function(){
+					var a = [5,6,7,8,9,15],
+						b = [7,8,9,11,12,13];
+					var intersect = ArrayIntersect.hashIntersect(a, b);
+					expect(intersect).toBeTruthy();
+					expect(intersect).toContain(7);
+					expect(intersect).toContain(8);
+					expect(intersect).toContain(9);
+				});
+				it('process two arrays with no intersection using hashes', function(){
+					var a = [5,6,7,8,9,15],
+						b = [11,12,13,17,19];
+					var intersect = ArrayIntersect.hashIntersect(a, b);
+					expect(intersect.length > 0).toBe(false);
+				});												
+			});
+
+			describe('Strings Permutations', function ( ) {
+				it('computes all permutations of "abc"', function ( ) {
+					var results = Permutator.wordPermutations("abc");
+					expect(results).toBeTruthy();
+					expect(results.length).toBe(6);
+					expect(results).toContain("abc");
+					expect(results).toContain("acb");
+					expect(results).toContain("bac");
+					expect(results).toContain("bca");
+					expect(results).toContain("cab");
+					expect(results).toContain("cba");
+				});
+				it('computes all permutations of "name"', function ( ) {
+					var results = Permutator.wordPermutations("name");
+					expect(results).toBeTruthy();
+					expect(results.length).toBe(24);
+					expect(results).toContain("name");
+					expect(results).toContain("mane");
+					expect(results).toContain("mean");
+					expect(results).toContain("amen");
+				});				
+			});
+
 		</script>
 	</head>
 	<body>
