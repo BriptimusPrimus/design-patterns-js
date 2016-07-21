@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>A01</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+</style>          
+</head>
+<body> 
+
+    <script>
+
+        function calculateSalary(key, value){
+
+            var _default = "hour";
+            var conv = {
+                "hour" : 1,
+                "day" : 8,
+                "week" : 40,
+                "month" : 160,
+                "year" : 1920,
+            }
+
+            function convert(from, to, qty){
+                var a = conv[from] || conv[_default],
+                    b = conv[to] || conv[_default];
+                var rate = (1/a) * b;
+                return rate * qty;    
+            }
+
+            console.log("Calculate salary");
+            console.log("Base: "+key+" : "+value)
+            var convertedVal = 0;
+            for (var k in conv){
+
+                convertedVal = convert(key, k, value);
+                convertedVal = Math.round(convertedVal * 100) / 100;
+                console.log(k+" => "+convertedVal);
+
+            }
+            console.log("-----------------------"); 
+
+        }
+
+        calculateSalary("hour", 85);
+        calculateSalary("month", 4000);
+        calculateSalary("month", 4300);
+        calculateSalary("month", 4500);
+        calculateSalary("month", 5000);
+
+        //30% taxes
+        calculateSalary("month", 4000*1.3);
+        calculateSalary("month", 4300*1.3);
+        calculateSalary("month", 4500*1.3);
+        calculateSalary("month", 5000*1.3);        
+
+    </script>      
+</body>
+</html>

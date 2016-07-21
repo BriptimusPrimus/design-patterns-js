@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>A00</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+
+</style>          
+</head>
+<body> 
+    <div id="slideshow">
+        <img src="http://lorempixel.com/400/200/technics/1" style="display: none" />
+        <img src="http://lorempixel.com/400/200/technics/2" style="display: none"/>
+        <img src="http://lorempixel.com/400/200/technics/3" style="display: none"/>
+        <img src="http://lorempixel.com/400/200/technics/4" style="display: none"/>
+        <img src="http://lorempixel.com/400/200/technics/5" style="display: none"/>
+    </div>  
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>   
+    <script>
+        $(document).ready(function(){
+
+            var idx = 1;
+            // (function next(){
+            //     //reset images to display none
+            //     $('img').css('display', 'none');
+            
+            //     //set the right img to display block
+            //     $('img[src="http://lorempixel.com/400/200/technics/'+idx+'"]')
+            //         .css('display', 'block');
+                
+            //     if(++idx > 5){
+            //         idx = 1;
+            //     }
+            //     setTimeout(next, 2000);
+            // })();
+        
+            (function next(){
+                //reset images to display none
+                var d = document.getElementById('slideshow');
+                var imgs = d.getElementsByTagName('img');
+                
+                for(var i = 0; i < imgs.length; i++){
+                    imgs[i].style.display = 'none';
+                }
+            
+                //set the right img to display block
+                for(var i = 0; i < imgs.length; i++){
+                    if(imgs[i].src == 'http://lorempixel.com/400/200/technics/'+idx){
+                        imgs[i].style.display = 'block';
+                        break;
+                    }
+                }
+                
+                if(++idx > 5){
+                    idx = 1;
+                }
+                setTimeout(next, 2000);
+            })();            
+             
+        });
+    </script>      
+</body>
+</html>
