@@ -3,7 +3,7 @@
 
 function hasUniqueChars(input) {
 	var prevChars = {};
-	for (i = 0; i < input.length; i++) {
+	for (var i = 0; i < input.length; i++) {
 		if (prevChars[input[i]]) {
 			return false;
 		}
