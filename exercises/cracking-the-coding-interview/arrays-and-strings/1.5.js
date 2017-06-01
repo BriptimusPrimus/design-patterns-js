@@ -1,8 +1,5 @@
 // Write a method to replace all spaces in a string with ‘%20’
 
-// Usage
-var assert = require('assert');
-
 function replaceRegex(str) {
     return str.replace(/\s/g, '%20');
 }
@@ -18,6 +15,9 @@ function replace(str) {
     }
     return result;
 }
+
+// Usage
+var assert = require('assert');
 
 console.log('Should replace empty strings');
 
