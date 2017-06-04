@@ -27,3 +27,36 @@ assert.strictEqual(removeDuplicates('abcbbdefb'), 'abcdef', 'removes the 3 dupli
 assert.strictEqual(removeDuplicates('abcdefghijklmn'), 'abcdefghijklmn', 'removes nothing');
 assert.strictEqual(removeDuplicates('abcadefggghijkklmn'), 'abcdefghijklmn', 'removes several letters');
 assert.strictEqual(removeDuplicates('abcdbefgaa'), 'abcdefg', 'removes letters at the end');
+
+
+function removeDuplicatesBook(str) {
+    var j;
+
+    if (str == null)
+        return; 3  
+    
+    var len = str.length; 
+    
+    if (len < 2) 
+        return; 
+        
+    var tail = 1; 
+    
+    for (var i = 1; i < len; ++i) { 
+        for (j = 0; j < tail; ++j) { 
+            if (str[i] == str[j]) 
+                break;
+        } 
+        
+        if (j == tail) {
+            str[tail] = str[i]; 
+            ++tail;   
+        }
+    } 
+    
+    str[tail] = 0;
+    return str;
+}
+
+
+removeDuplicatesBook('aaabbbcdabxy'.split(''));
