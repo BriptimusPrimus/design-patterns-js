@@ -20,6 +20,43 @@ function rotate(mtx) {
 }
 
 
+// Recomended implementation (Does not make use of any aditional memory -> O(1) space)
+// https://jsbin.com/buxowemira/edit?js,console
+// ========================================================================
+// ========================================================================
+function swap(M, i0, j0, i1, j1) {
+    var temp = M[i0][j0];
+    M[i0][j0] = M[i1][j1];
+    M[i1][j1] = temp;
+}
+
+function swap4(M, left, right, inc) {
+    swap(M, left, left + inc, left + inc, right);
+    swap(M, left, left + inc, right, right - inc);
+    swap(M, left, left + inc, right - inc, left);
+}
+
+function rotateLayer (M, left, right) {
+    var inc = 0;
+    while (inc < right - left) {
+        swap4(M, left, right, inc);
+        inc += 1;
+    }
+}
+
+function rotateMatrix(M) {
+    var left = 0;
+    var right = M.length - 1;
+    while (left < right) {
+        rotateLayer(M, left, right);
+        left += 1;
+        right -= 1;
+    }
+    return M;
+}
+// ========================================================================
+// ========================================================================
+
 
 // Usage
 var assert = require('assert');
@@ -99,3 +136,10 @@ assert.deepEqual(rotate(mt3), mt3i, 'Rotates 3x3 matrix');
 assert.deepEqual(rotate(mt4), mt4i, 'Rotates 4x4 matrix');
 assert.deepEqual(rotate(mt5), mt5i, 'Rotates 5x5 matrix');
 assert.deepEqual(rotate(mt6), mt6i, 'Rotates 6x6 matrix');
+
+assert.deepEqual(rotateMatrix(mt1), mt1, 'Rotates 1x1 matrix');
+assert.deepEqual(rotateMatrix(mt2), mt2i, 'Rotates 2x2 matrix');
+assert.deepEqual(rotateMatrix(mt3), mt3i, 'Rotates 3x3 matrix');
+assert.deepEqual(rotateMatrix(mt4), mt4i, 'Rotates 4x4 matrix');
+assert.deepEqual(rotateMatrix(mt5), mt5i, 'Rotates 5x5 matrix');
+assert.deepEqual(rotateMatrix(mt6), mt6i, 'Rotates 6x6 matrix');
