@@ -45,5 +45,5 @@ assert.strictEqual(findKthToLast(head, 3), d, 'd is the kth=3 to last element');
 assert.strictEqual(findKthToLast(head, 4), c, 'c is the kth=4 to last element');
 assert.strictEqual(findKthToLast(head, 5), b, 'b is the kth=5 to last element');
 assert.strictEqual(findKthToLast(head, 6), a, 'a is the kth=6 to last element');
-assert.strictEqual(findKthToLast(head, 7), head, 'head is the kth=6 to last element');
+assert.strictEqual(findKthToLast(head, 7), head, 'head is the kth=7 to last element');
 assert.strictEqual(findKthToLast(head, 8), undefined, 'There is no kth=8 to last element');
