@@ -54,6 +54,17 @@ function isRotation(s1, s2) {
     return false;
 }
 
+// book sugestion
+function isRotation2(s1, s2) {
+    if (s1.length !== s2.length && s1.length > 0) {
+        return false;
+    }
+
+    // Concatenate s1 and s1 within new buffer
+    var s1s1 = s1 + s1;
+    return isSubstring(s2, s1s1);
+}
+
 
 // Usage
 var assert = require('assert');
@@ -67,3 +78,9 @@ assert.deepEqual(isRotation('one', 'onetwothree'), false, 'one is not a rotation
 assert.deepEqual(isRotation('onetwothree', 'one'), false, 'onetwothree is not a rotation of one');
 assert.deepEqual(isRotation('adabraabrak', 'abrakadabra'), true, 'adabraabrak is a rotation of abrakadabra');
 
+assert.deepEqual(isRotation2('imepizzat', 'pizzatime'), true, 'pizzatime is a rotation of imepizzat');
+assert.deepEqual(isRotation2('pizzatime', 'imepizzat'), true, 'imepizzat is a rotation of pizzatime');
+assert.deepEqual(isRotation2('pizzatime', 'otherword'), false, 'otherword is not a rotation of pizzatime');
+assert.deepEqual(isRotation2('one', 'onetwothree'), false, 'one is not a rotation of onetwothree');
+assert.deepEqual(isRotation2('onetwothree', 'one'), false, 'onetwothree is not a rotation of one');
+assert.deepEqual(isRotation2('adabraabrak', 'abrakadabra'), true, 'adabraabrak is a rotation of abrakadabra');
